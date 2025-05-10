@@ -31,8 +31,15 @@ extension=zip
 composer install
 cp .env.example .env
 php artisan key:generate
+
+# choose yes to use sqlite database
 php artisan migrate
+
+# to watch queue
 php artisan queue:work
+
+# open in new termina and run below, then visit link
+php artisan serve
 ```
 
 
