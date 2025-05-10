@@ -104,54 +104,54 @@
         // TEST SOCKET START
 
 
-        const ws = new WebSocket('ws://localhost:8080/ws');
+        // const ws = new WebSocket('ws://localhost:8080/ws');
 
-        ws.onopen = () => {
-            console.log('Connected to WebSocket server!');
-            // You can send a message to the server here if needed:
-            ws.send('Hello Server!');
-        };
+        // ws.onopen = () => {
+        //     console.log('Connected to WebSocket server!');
+        //     // You can send a message to the server here if needed:
+        //     ws.send('Hello Server!');
+        // };
 
-        ws.onmessage = (event) => {
-            console.log('Received message:', event.data);
+        // ws.onmessage = (event) => {
+        //     console.log('Received message:', event.data);
 
-            let json_data = JSON.parse(event.data);
+        //     let json_data = JSON.parse(event.data);
 
-            console.log(json_data);
+        //     console.log(json_data);
 
-            updateRowStatus_just_id(json_data.id, json_data.status);
+        //     updateRowStatus_just_id(json_data.id, json_data.status);
 
-            if (json_data.status == 'REMOVED')
-            {
-                deleteRow_just_id(json_data.id)
-            }
-        };
+        //     if (json_data.status == 'REMOVED')
+        //     {
+        //         deleteRow_just_id(json_data.id)
+        //     }
+        // };
 
-        ws.onerror = (error) => {
-            console.error('WebSocket error:', error);
-        };
+        // ws.onerror = (error) => {
+        //     console.error('WebSocket error:', error);
+        // };
 
-        ws.onclose = (event) => {
-            console.log('Disconnected from WebSocket server.', event);
-             if (event.wasClean) {
-                console.log(`Connection closed cleanly, code=${event.code}, reason=${event.reason}`);
-            } else {
-                console.error('Connection died');
-            }
-        };
+        // ws.onclose = (event) => {
+        //     console.log('Disconnected from WebSocket server.', event);
+        //      if (event.wasClean) {
+        //         console.log(`Connection closed cleanly, code=${event.code}, reason=${event.reason}`);
+        //     } else {
+        //         console.error('Connection died');
+        //     }
+        // };
 
-        // Add a button to the page to close the connection (for demonstration purposes)
-        const closeButton = document.createElement('button');
-        closeButton.textContent = 'Close Connection';
-        closeButton.onclick = () => {
-            if (ws.readyState === WebSocket.OPEN || ws.readyState === WebSocket.CONNECTING) {
-                ws.close();
-            } else {
-              console.log("connection is already closed")
-            }
+        // // Add a button to the page to close the connection (for demonstration purposes)
+        // const closeButton = document.createElement('button');
+        // closeButton.textContent = 'Close Connection';
+        // closeButton.onclick = () => {
+        //     if (ws.readyState === WebSocket.OPEN || ws.readyState === WebSocket.CONNECTING) {
+        //         ws.close();
+        //     } else {
+        //       console.log("connection is already closed")
+        //     }
 
-        };
-        document.body.appendChild(closeButton);
+        // };
+        // document.body.appendChild(closeButton);
 
 
         // TEST SOCKET END
