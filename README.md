@@ -65,7 +65,7 @@ go run server.go
 after the server.go is runnning,
 go to upload.blade.php
 
-comment out the startPolling() function call (line 168 and line 299)
+comment out the startPolling() function call (line 167 and line 277)
 uncomment the top part from line 107 - 154
 then refresh the page
 ```
