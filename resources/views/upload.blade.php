@@ -163,32 +163,44 @@
         rows.forEach(row => {
             const status = row.dataset.status;
             const id = row.dataset.id;
-
             if (status === 'pending' || status === 'processing') {
                 startPolling(id); // Pass only the id
             }
         });
 
         function startPolling(id) {
-            const intervalId = setInterval(() => {
+
+            const row = document.querySelector(`tr[data-id="${id}"]`);
+
+            if (!row)
+            {
+                return;   
+            }
+
+            const intervalId = setInterval(function() {
                 fetch(`{{ route('upload-row-info', '') }}/${id}`)
                 .then(response => response.json())
                 .then(data => {
-                    const row = document.querySelector(`tbody tr[data-id="${id}"]`);
-                    if (row) { // check if the row still exists
-                        if (data.status === 'completed') {
-                            clearInterval(intervalId);
-                            updateRowStatus(row, 'completed');
-                        } else if (data.status === 'error') {
-                            clearInterval(intervalId);
-                            deleteRow(row);
-                        }
-                        else if (data.status === 'processing') {
-                            updateRowStatus(row, 'processing');
-                        }
-                    }
-                    else{
+                    
+                    if (!row)
+                    {
                         clearInterval(intervalId);
+                        return;
+                    }
+
+                    if (data.status === 'completed')
+                    {
+                        clearInterval(intervalId);
+                        updateRowStatus(row, 'completed');
+                    }
+                    else if (data.status === 'error')
+                    {
+                        clearInterval(intervalId);
+                        deleteRow(row);
+                    }
+                    else if (data.status === 'processing')
+                    {
+                        updateRowStatus(row, 'processing');
                     }
                 })
                 .catch(error => {
@@ -258,12 +270,11 @@
                 return res.json();
             })
             .then(resdata => {
-                console.log(resdata)
-
                 let row_data = resdata.row_data;
                 console.log(row_data);
  
                 prepend_row(row_data.id, row_data.time, row_data.time_human, row_data.uploaded_filename, row_data.status);
+                startPolling(row_data.id);
             })
             .catch(async err => {
                 let data = await err.json();
@@ -295,8 +306,6 @@
                 <td>${filename}</td>
                 <td>${status}</td>
             `;
-    
-            startPolling(id);
         }
     });
 </script>
