@@ -14,14 +14,14 @@ class ProductImport implements ToModel, WithHeadingRow, WithBatchInserts, WithUp
     public function model(array $row)
     {
         return new Product([
-            'unique_key' => $row['unique_key'],
-            'product_title' => $row['product_title'],
-            'product_description' => $row['product_description'],
-            'style' => $row['style'],
-            'color_name' => $row['color_name'],
-            'size' => $row['size'],
-            'piece_price' => $row['piece_price'],
-            'sanmar_mainframe_color' => $row['sanmar_mainframe_color'],
+            'unique_key' => clean_utf8($row['unique_key']),
+            'product_title' => clean_utf8($row['product_title']),
+            'product_description' => clean_utf8($row['product_description']),
+            'style' => clean_utf8($row['style']),
+            'color_name' => clean_utf8($row['color_name']),
+            'size' => clean_utf8($row['size']),
+            'piece_price' => clean_utf8($row['piece_price']),
+            'sanmar_mainframe_color' => clean_utf8($row['sanmar_mainframe_color']),
         ]);
     }
 
@@ -32,11 +32,11 @@ class ProductImport implements ToModel, WithHeadingRow, WithBatchInserts, WithUp
 
     public function batchSize(): int
     {
-        return 1300;
+        return 5000;
     }
 
     public function chunkSize(): int
     {
-        return 1300;
+        return 5000;
     }
 }
